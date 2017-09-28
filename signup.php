@@ -1,6 +1,6 @@
 <?php
 
-	require_once('conn_db.php');
+	require_once('conn_choir_db.php');
 
 	$fName = $_REQUEST['fName'];
 	$lName = $_REQUEST['lName'];
