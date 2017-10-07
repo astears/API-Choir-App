@@ -3,5 +3,5 @@
     <string name="username_hint">Enter username...</string>
     <string name="password_hint">Enter password...</string>
     <string name="login_button">Login</string>
-    <string name="Home_img">Welcome screen image</string>
+    <string name="Home_img">Welcome screen img</string>
 </resources>
