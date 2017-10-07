@@ -19,9 +19,11 @@ public class MainActivity extends AppCompatActivity {
 
         EditText usernameEditText = (EditText)findViewById(R.id.usernameEditText);
         EditText passwordEditText = (EditText)findViewById(R.id.passwordEditText);
+        EditText roleEditText = (EditText)findViewById(R.id.roleEditText);
 
-        if (usernameEditText.getText().toString().matches("") || passwordEditText.getText().toString().matches("")) {
-            Toast.makeText(this, "Both username and password are required", Toast.LENGTH_SHORT).show();
+        if (usernameEditText.getText().toString().matches("") || passwordEditText.getText().toString().matches("") ||
+        roleEditText.getText().toString().matches("")) {
+            Toast.makeText(this, "Both username, password, and role are required", Toast.LENGTH_SHORT).show();
         } else {
             Log.i("Username", usernameEditText.getText().toString());
             Log.i("Password", passwordEditText.getText().toString());

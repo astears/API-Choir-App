@@ -4,4 +4,5 @@
     <string name="password_hint">Enter password...</string>
     <string name="login_button">Login</string>
     <string name="Home_img">Welcome screen img</string>
+    <string name="role_hint">role: D/M</string>
 </resources>
