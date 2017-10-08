@@ -7,8 +7,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.content.Intent;
+import android.os.AsyncTask;
+
+import org.json.JSONObject;
+
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
+    private String user_role = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,26 +26,68 @@ public class MainActivity extends AppCompatActivity {
 
         EditText usernameEditText = (EditText)findViewById(R.id.usernameEditText);
         EditText passwordEditText = (EditText)findViewById(R.id.passwordEditText);
-        EditText roleEditText = (EditText)findViewById(R.id.roleEditText);
+
+        String username = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
 
         // Make sure the user enters all fields
-        if (usernameEditText.getText().toString().matches("") || passwordEditText.getText().toString().matches("") ||
-        roleEditText.getText().toString().matches("")) {
-            Toast.makeText(this, "Both username, password, and role are required", Toast.LENGTH_SHORT).show();
-        }
-        // Check if the user is a member - Hardcoded for now
-        if (roleEditText.getText().toString().equals("M")) {
-            Intent intent = new Intent(MainActivity.this, MemberActivity.class);
-            startActivity(intent);
-        }
-        else if (roleEditText.getText().toString().equals("D")) {
-            Intent intent = new Intent(MainActivity.this, DirectorActivity.class);
-            startActivity(intent);
+        if (username.matches("") || password.matches("")) {
+            Toast.makeText(this, "Both username & password are required", Toast.LENGTH_SHORT).show();
         }
         else {
-            // Log.i("Username", usernameEditText.getText().toString());
-            // Log.i("Password", passwordEditText.getText().toString());
-            Toast.makeText(this, "Enter 'M' or 'D' for role to login", Toast.LENGTH_SHORT).show();
+            new LoginTask().execute(username, password);
+        }
+
+        // Check if the user is a member - Hardcoded for now
+    }
+    // Create a class that extends AsyncTask to perform network requests
+    public class LoginTask extends AsyncTask<String, Void, String[]> {
+
+        // Override the doInBackground method to perform your network requests
+        @Override
+        protected String[] doInBackground(String... params) {
+
+            String username = params[0];
+            String pass = params[1];
+            URL loginRequestUrl = NetworkUtils.buildUrl(username, pass);
+
+            try {
+                String jsonLoginResponse = NetworkUtils
+                        .getResponseFromHttpUrl(loginRequestUrl);
+
+                JSONObject role = new JSONObject(jsonLoginResponse);
+                String[] simpleJsonLoginData = new String[1];
+                simpleJsonLoginData[0] = role.getString("role");
+
+                return simpleJsonLoginData;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        // Override the onPostExecute method to display the results of the network request
+        @Override
+        protected void onPostExecute(String[] loginData) {
+            user_role = loginData[0];
+            if (user_role != null) {
+
+                if (user_role.equals("m")) {
+                    Intent intent = new Intent(MainActivity.this, MemberActivity.class);
+                    startActivity(intent);
+                }
+                else if (user_role.equals("d")) {
+                    Intent intent = new Intent(MainActivity.this, DirectorActivity.class);
+                    startActivity(intent);
+                }
+                else if (user_role.equals("Incorrect Username")) {
+                    Toast.makeText(MainActivity.this, "Incorrect Username", Toast.LENGTH_SHORT).show();
+                }
+                else if (user_role.equals("Incorrect Password")) {
+                    Toast.makeText(MainActivity.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 }

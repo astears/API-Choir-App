@@ -41,17 +41,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameEditText" />
 
-    <EditText
-        android:id="@+id/roleEditText"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/role_hint"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
-
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
@@ -61,5 +50,6 @@
         android:text="@string/login_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/roleEditText"/>
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"/>
+
 </android.support.constraint.ConstraintLayout>

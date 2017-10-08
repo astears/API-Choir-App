@@ -8,9 +8,11 @@
 	$sql = "SELECT role FROM users WHERE username = '$username';";
 	$result = mysqli_query($conn, $sql);
 
+
 	// TODO: Create better error codes
 	if (mysqli_num_rows($result) == 0) {
-		echo json_encode("Incorrect Username");
+		$role = array('role' => "Incorrect Username");
+		echo json_encode($role);
 		return;
 	}
 	$sql = "SELECT role FROM users WHERE username = '$username' && password = '$password';";
@@ -18,10 +20,11 @@
 
 	if (mysqli_num_rows($result) > 0) {
 		$row = mysqli_fetch_assoc($result);
-		$role = $row["role"];
+		$role = array('role' => $row["role"]);
 	}
 	else {
 		$role = "Incorrect Password";
+		$role = array('role' => "Incorrect Password");
 	}
 
 	echo json_encode($role);
