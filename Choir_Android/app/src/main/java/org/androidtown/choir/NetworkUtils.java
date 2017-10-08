@@ -16,9 +16,15 @@ import java.net.MalformedURLException;
 
 public class NetworkUtils {
 
+    final static String LOGIN_BASE_URL = "http://192.168.64.2/login.php";
+    final static String SIGNUP_BASE_URL = "http://192.168.64.2/signup.php";
     final static String USERNAME_PARAM = "username";
     final static String PASS_PARAM = "password";
-    final static String BASE_URL = "http://192.168.64.2/login.php";
+    final static String FNAME_PARAM = "fName";
+    final static String LNAME_PARAM = "lName";
+    final static String EMAIL_PARAM = "email";
+    final static String PHONE_PARAM = "phone";
+    final static String ROLE_PARAM = "role";
 
     /**
      * This method returns the entire result from the HTTP response.
@@ -48,9 +54,33 @@ public class NetworkUtils {
 
     public static URL buildUrl(String username, String pass) {
 
-        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+        Uri builtUri = Uri.parse(LOGIN_BASE_URL).buildUpon()
                 .appendQueryParameter(USERNAME_PARAM, username)
                 .appendQueryParameter(PASS_PARAM, pass)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.i("Built URI ", url.toString());
+
+        return url;
+    }
+
+    public static URL buildUrl(SignupActivity.SignupInfo form) {
+
+        Uri builtUri = Uri.parse(SIGNUP_BASE_URL).buildUpon()
+                .appendQueryParameter(FNAME_PARAM, form.fName)
+                .appendQueryParameter(LNAME_PARAM, form.lName)
+                .appendQueryParameter(USERNAME_PARAM, form.username)
+                .appendQueryParameter(PASS_PARAM, form.password)
+                .appendQueryParameter(EMAIL_PARAM, form.email)
+                .appendQueryParameter(PHONE_PARAM, form.phone)
+                .appendQueryParameter(ROLE_PARAM, form.role)
                 .build();
 
         URL url = null;

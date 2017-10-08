@@ -38,8 +38,13 @@ public class MainActivity extends AppCompatActivity {
             new LoginTask().execute(username, password);
         }
 
-        // Check if the user is a member - Hardcoded for now
     }
+
+    public void signupButtonPressed(View view) {
+        Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+        startActivity(intent);
+    }
+
     // Create a class that extends AsyncTask to perform network requests
     public class LoginTask extends AsyncTask<String, Void, String[]> {
 

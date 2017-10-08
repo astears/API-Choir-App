@@ -7,4 +7,6 @@
     <string name="role_hint">role: D/M</string>
     <string name="member_welcome">Member Profile!</string>
     <string name="director_welcome">Director Profile!</string>
+    <string name="no_account">Don\'t have an account yet?</string>
+    <string name="signup_button">Sign up</string>
 </resources>
