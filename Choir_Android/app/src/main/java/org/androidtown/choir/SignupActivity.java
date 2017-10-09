@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
 import org.json.JSONObject;
 
@@ -26,6 +29,17 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+    }
+
+    public void onSignupSubmit(View view) {
+
+        String firstName = findViewById(R.id.firstName).toString();
+        String lastName = findViewById(R.id.lastName).toString();
+        String username = findViewById(R.id.signupUsername).toString();
+        String password = findViewById(R.id.signupPassword).toString();
+        String confirmPassword = findViewById(R.id.confirmPassword).toString();
+        String email = findViewById(R.id.email).toString();
+
     }
 
     public class SignupTask extends AsyncTask<String, Void, String[]> {

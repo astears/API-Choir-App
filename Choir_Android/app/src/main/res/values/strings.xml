@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Choir</string>
-    <string name="username_hint">Enter username...</string>
-    <string name="password_hint">Enter password...</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
     <string name="login_button">Login</string>
     <string name="Home_img">Welcome screen img</string>
     <string name="role_hint">role: D/M</string>
@@ -9,4 +9,11 @@
     <string name="director_welcome">Director Profile!</string>
     <string name="no_account">Don\'t have an account yet?</string>
     <string name="signup_button">Sign up</string>
+    <string name="signup_firstname">First Name</string>
+    <string name="signup_lastname">Last Name</string>
+    <string name="signup_username">Username</string>
+    <string name="signup_password">Password</string>
+    <string name="signup_confirm_password">Confirm Password</string>
+    <string name="signup_email">Email</string>
+    <string name="signup_submit">Submit</string>
 </resources>
