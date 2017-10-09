@@ -23,7 +23,6 @@ public class NetworkUtils {
     final static String FNAME_PARAM = "fName";
     final static String LNAME_PARAM = "lName";
     final static String EMAIL_PARAM = "email";
-    final static String PHONE_PARAM = "phone";
     final static String ROLE_PARAM = "role";
 
     /**
@@ -79,8 +78,7 @@ public class NetworkUtils {
                 .appendQueryParameter(USERNAME_PARAM, form.username)
                 .appendQueryParameter(PASS_PARAM, form.password)
                 .appendQueryParameter(EMAIL_PARAM, form.email)
-                .appendQueryParameter(PHONE_PARAM, form.phone)
-                .appendQueryParameter(ROLE_PARAM, form.role)
+                .appendQueryParameter(ROLE_PARAM, "m")
                 .build();
 
         URL url = null;

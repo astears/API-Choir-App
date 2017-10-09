@@ -20,9 +20,8 @@ public class SignupActivity extends AppCompatActivity {
         String lName;
         String username;
         String password;
+        String confirmPassword;
         String email;
-        String phone;
-        String role;
     }
 
     @Override
@@ -33,12 +32,30 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onSignupSubmit(View view) {
 
-        String firstName = findViewById(R.id.firstName).toString();
-        String lastName = findViewById(R.id.lastName).toString();
-        String username = findViewById(R.id.signupUsername).toString();
-        String password = findViewById(R.id.signupPassword).toString();
-        String confirmPassword = findViewById(R.id.confirmPassword).toString();
-        String email = findViewById(R.id.email).toString();
+        EditText _firstName = (EditText)findViewById(R.id.firstName);
+        EditText _lastName = (EditText)findViewById(R.id.lastName);
+        EditText _username = (EditText)findViewById(R.id.signupUsername);
+        EditText _password = (EditText)findViewById(R.id.signupPassword);
+        EditText _confirmPassword = (EditText)findViewById(R.id.confirmPassword);
+        EditText _email = (EditText)findViewById(R.id.email);
+
+        String firstName = _firstName.getText().toString();
+        String lastName= _lastName.getText().toString();
+        String username = _username.getText().toString();
+        String password = _password.getText().toString();
+        String confirmPassword = _confirmPassword.getText().toString();
+        String email = _email.getText().toString();
+
+        if (firstName.matches("") || lastName.matches("") || username.matches("") || password.matches("") ||
+                confirmPassword.matches("") || email.matches("")) {
+            Toast.makeText(this, "Please fill in all fields to signup", Toast.LENGTH_SHORT).show();
+        }
+        else if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Password fields don't match", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            new SignupTask().execute(firstName, lastName, username, password, email);
+        }
 
     }
 
@@ -54,20 +71,18 @@ public class SignupActivity extends AppCompatActivity {
             signupForm.username = params[2];
             signupForm.password = params[3];
             signupForm.email = params[4];
-            signupForm.phone = params[5];
-            signupForm.role = params[6];
 
-            URL loginRequestUrl = NetworkUtils.buildUrl(signupForm);
+            URL signupRequestUrl = NetworkUtils.buildUrl(signupForm);
 
             try {
-                String jsonLoginResponse = NetworkUtils
-                        .getResponseFromHttpUrl(loginRequestUrl);
+                String jsonSignupResponse = NetworkUtils
+                        .getResponseFromHttpUrl(signupRequestUrl);
 
-                JSONObject role = new JSONObject(jsonLoginResponse);
-                String[] simpleJsonLoginData = new String[1];
-                simpleJsonLoginData[0] = role.getString("role");
+                JSONObject role = new JSONObject(jsonSignupResponse);
+                String[] simpleJsonSignupData = new String[1];
+                simpleJsonSignupData[0] = role.getString("result");
 
-                return simpleJsonLoginData;
+                return simpleJsonSignupData;
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -78,7 +93,24 @@ public class SignupActivity extends AppCompatActivity {
         // Override the onPostExecute method to display the results of the network request
         @Override
         protected void onPostExecute(String[] loginData) {
-
+            String queryResult = loginData[0];
+            if (queryResult != null) {
+                if (queryResult.equals("Username exists")) {
+                    Toast.makeText(SignupActivity.this, "Username is unavailable", Toast.LENGTH_SHORT).show();
+                }
+                else if (queryResult.equals("Email registered")) {
+                    Toast.makeText(SignupActivity.this, "An account is already registered with this email",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if (queryResult.equals("true")) {
+                    Intent intent = new Intent(SignupActivity.this, MemberActivity.class);
+                    startActivity(intent);
+                }
+                else if (queryResult.equals("false")) {
+                    Toast.makeText(SignupActivity.this, "An error occured creating an account",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 }
