@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.androidtown.choir.SignupActivity">
+    tools:context="org.androidtown.choir.SignupActivity"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/signupHeader"
@@ -16,89 +17,106 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/signup_button"
-        android:textSize="25sp"/>
+        android:textSize="25sp"
+        android:layout_gravity="center"/>
 
     <EditText
         android:id="@+id/firstName"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/signup_firstname"
-        android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupHeader"/>
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:inputType="textPersonName"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signup_firstname"
+        android:textSize="18sp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"/>
 
-    <EditText
+   <EditText
         android:id="@+id/lastName"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/signup_lastname"
         android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstName"/>
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signup_lastname"
+        android:textSize="18sp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"/>
 
-    <EditText
+   <EditText
         android:id="@+id/signupUsername"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/signup_username"
         android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastName"/>
-
-    <EditText
-        android:id="@+id/signupPassword"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/signup_password"
-        android:inputType="textPassword"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupUsername"/>
-
-    <EditText
-        android:id="@+id/confirmPassword"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/signup_confirm_password"
-        android:inputType="textPassword"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupPassword"/>
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/signup_email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPassword"/>
-
-    <Button
-        android:id="@+id/signupSubmit"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"/>
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:onClick="onSignupSubmit"
-        android:text="@string/signup_submit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"/>
+        android:text="@string/signup_username"
+        android:textSize="18sp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"/>
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+       android:id="@+id/signupPassword"
+       android:layout_width="350dp"
+       android:layout_height="wrap_content"
+       android:inputType="textPassword"
+       android:layout_marginLeft="12dp"
+       android:layout_marginStart="12dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signup_password"
+        android:textSize="18sp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"/>
+
+   <EditText
+       android:id="@+id/confirmPassword"
+       android:layout_width="350dp"
+       android:layout_height="wrap_content"
+       android:inputType="textPassword"
+       android:layout_marginLeft="12dp"
+       android:layout_marginStart="12dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signup_confirm_password"
+        android:textSize="18sp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"/>
+
+    <EditText
+         android:id="@+id/email"
+         android:layout_width="350dp"
+         android:layout_height="wrap_content"
+         android:inputType="textEmailAddress"
+         android:layout_marginLeft="12dp"
+         android:layout_marginStart="12dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signup_email"
+        android:textSize="18sp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"/>
+
+     <Button
+         android:id="@+id/signupSubmit"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:onClick="onSignupSubmit"
+         android:text="@string/signup_submit"
+         android:layout_gravity="center"/>
+
+</LinearLayout>
