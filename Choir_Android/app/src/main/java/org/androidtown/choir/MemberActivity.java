@@ -31,6 +31,7 @@ public class MemberActivity extends AppCompatActivity
     private SongAdapter mAdapter;
     private RecyclerView mSongsList;
     private String songs[];
+    private String fullSongName[];
     private Toast mToast;
 
     @Override
@@ -62,6 +63,7 @@ public class MemberActivity extends AppCompatActivity
 
         try {
             assetFiles = getAssets().list("songs");
+            fullSongName = getAssets().list("songs");
             num_songs = assetFiles.length;
         }
         catch (IOException e) {
@@ -82,15 +84,12 @@ public class MemberActivity extends AppCompatActivity
          * constructor. By default, if you don't specify an orientation, you get a vertical list.
          * In our case, we want a vertical list, so we don't need to pass in an orientation flag to
          * the LinearLayoutManager constructor.
-         *
-         * There are other LayoutManagers available to display your data in uniform grids,
-         * staggered grids, and more! See the developer documentation for more details.
          */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         // COMPLETED (6) Use setLayoutManager on mNumbersList with the LinearLayoutManager we created above
         mSongsList.setLayoutManager(layoutManager);
 
-        // COMPLETED (7) Use setHasFixedSize(true) to designate that the contents of the RecyclerView won't change an item's size
+        // Use setHasFixedSize(true) to designate that the contents of the RecyclerView won't change an item's size
         /*
          * Use this setting to improve performance if you know that changes in content do not
          * change the child layout size in the RecyclerView
@@ -101,7 +100,8 @@ public class MemberActivity extends AppCompatActivity
         /*
          * The SongAdapter is responsible for displaying each item in the list.
          */
-        mAdapter = new SongAdapter(num_songs, assetFiles, this);
+        stripExtension();
+        mAdapter = new SongAdapter(num_songs, songs, this);
 
         // Set the SongAdapter you created on mNumbersList
         mSongsList.setAdapter(mAdapter);
@@ -110,8 +110,19 @@ public class MemberActivity extends AppCompatActivity
     @Override
     public void onListItemClick(int clickedItemIndex) {
 
-        Intent intent = new SongActivity().songIntent(MemberActivity.this, songs[clickedItemIndex]);
+        Intent intent = new SongActivity().songIntent(MemberActivity.this, fullSongName[clickedItemIndex]);
         startActivity(intent);
+    }
+
+    public void stripExtension() {
+        for (int i  = 0; i < songs.length; i++) {
+            int endIdx = songs[i].length() - 1;
+            if (songs[i].substring(endIdx - 3).equals(".pdf")) {
+                songs[i] = songs[i].substring(0, endIdx - 3);
+
+            }
+            //Log.i("val: ", songs[i].substring(0, endIdx - 3));
+        }
     }
 
 }
