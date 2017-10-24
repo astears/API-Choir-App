@@ -1,19 +1,20 @@
 package org.androidtown.choir;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.github.barteksc.pdfviewer.PDFView;
-import com.github.barteksc.pdfviewer.PDFView.Configurator;
-import com.github.barteksc.pdfviewer.listener.OnRenderListener;
 
 import java.io.IOException;
+import java.lang.reflect.Member;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static org.androidtown.choir.SongActivity.songIntent;
@@ -28,7 +29,7 @@ public class MemberActivity extends AppCompatActivity
      * "pretty" state when the reset menu item is clicked.
      */
     private SongAdapter mAdapter;
-    private RecyclerView mNumbersList;
+    private RecyclerView mSongsList;
     private String songs[];
     private Toast mToast;
 
@@ -36,6 +37,25 @@ public class MemberActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member);
+
+       BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_songs:
+                        Toast.makeText(MemberActivity.this, "Songs", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_uniforms:
+                        Toast.makeText(MemberActivity.this, "Uniforms", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_messages:
+                        Toast.makeText(MemberActivity.this, "Messages", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return true;
+            }
+        });
 
         int num_songs = 0;
         String[] assetFiles = null;
@@ -53,7 +73,7 @@ public class MemberActivity extends AppCompatActivity
          * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
          * do things like set the adapter of the RecyclerView and toggle the visibility.
          */
-        mNumbersList = (RecyclerView) findViewById(R.id.rv_numbers);
+        mSongsList = (RecyclerView) findViewById(R.id.rv_numbers);
 
         /*
          * A LinearLayoutManager is responsible for measuring and positioning item views within a
@@ -68,56 +88,32 @@ public class MemberActivity extends AppCompatActivity
          */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         // COMPLETED (6) Use setLayoutManager on mNumbersList with the LinearLayoutManager we created above
-        mNumbersList.setLayoutManager(layoutManager);
+        mSongsList.setLayoutManager(layoutManager);
 
         // COMPLETED (7) Use setHasFixedSize(true) to designate that the contents of the RecyclerView won't change an item's size
         /*
          * Use this setting to improve performance if you know that changes in content do not
          * change the child layout size in the RecyclerView
          */
-        mNumbersList.setHasFixedSize(true);
+        mSongsList.setHasFixedSize(true);
 
-        // COMPLETED (8) Store a new GreenAdapter in mAdapter and pass it NUM_LIST_ITEMS
+        // Store a new SongAdapter in mAdapter and pass it num_songs and the assetFiles
         /*
-         * The GreenAdapter is responsible for displaying each item in the list.
+         * The SongAdapter is responsible for displaying each item in the list.
          */
         mAdapter = new SongAdapter(num_songs, assetFiles, this);
 
-        // COMPLETED (9) Set the GreenAdapter you created on mNumbersList
-        mNumbersList.setAdapter(mAdapter);
+        // Set the SongAdapter you created on mNumbersList
+        mSongsList.setAdapter(mAdapter);
     }
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
 
-        /*if (mToast != null) {
-            mToast.cancel();
-        }
-
-        String toastMessage = songs[clickedItemIndex] + " clicked.";
-        mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
-
-        mToast.show();*/
-
         Intent intent = new SongActivity().songIntent(MemberActivity.this, songs[clickedItemIndex]);
         startActivity(intent);
     }
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_member);
-
-
-
-        final PDFView pdfView = (PDFView) findViewById(R.id.pdfView);
-        pdfView.fromAsset("El consuelo de mi Alma.pdf").onRender(new OnRenderListener() {
-            @Override
-            public void onInitiallyRendered(int pages, float pageWidth, float pageHeight) {
-                pdfView.fitToWidth(); // optionally pass page number
-            }
-        }).load();
-    }*/
 }
 
 
