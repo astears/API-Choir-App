@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Choir</string>
+    <string name="app_name">LLDM USA Choir</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
     <string name="login_button">Login</string>
