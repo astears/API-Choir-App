@@ -3,6 +3,10 @@
           package="org.androidtown.choir">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        package="com.example.android.recyclerview"/>
 
     <application
         android:allowBackup="true"
@@ -23,6 +27,8 @@
         <activity android:name=".DirectorActivity">
         </activity>
         <activity android:name=".SignupActivity">
+        </activity>
+        <activity android:name=".SongActivity">
         </activity>
     </application>
 
