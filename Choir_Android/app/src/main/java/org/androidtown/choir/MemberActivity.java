@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.reflect.Member;
+import java.util.HashMap;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static org.androidtown.choir.SongActivity.songIntent;
@@ -34,10 +35,14 @@ public class MemberActivity extends AppCompatActivity
     private String fullSongName[];
     private Toast mToast;
 
+    SessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member);
+
+        session = new SessionManager(getApplicationContext());
 
        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -46,6 +51,7 @@ public class MemberActivity extends AppCompatActivity
                 switch (item.getItemId()) {
                     case R.id.action_songs:
                         Toast.makeText(MemberActivity.this, "Songs", Toast.LENGTH_SHORT).show();
+                        session.logoutUser();
                         break;
                     case R.id.action_uniforms:
                         Toast.makeText(MemberActivity.this, "Uniforms", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,7 @@
 package org.androidtown.choir;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,19 +15,30 @@ import org.json.JSONObject;
 
 import java.net.URL;
 
+import static junit.runner.BaseTestRunner.savePreferences;
+
 public class MainActivity extends AppCompatActivity {
+
     private String user_role = null;
+    EditText usernameEditText;
+    EditText passwordEditText;
+
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        session = new SessionManager(getApplicationContext());
+        session.checkLogin();
+
     }
 
     public void loginButtonPressed(View view) {
 
-        EditText usernameEditText = (EditText)findViewById(R.id.usernameEditText);
-        EditText passwordEditText = (EditText)findViewById(R.id.passwordEditText);
+        usernameEditText = (EditText)findViewById(R.id.usernameEditText);
+        passwordEditText = (EditText)findViewById(R.id.passwordEditText);
 
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
@@ -79,10 +92,12 @@ public class MainActivity extends AppCompatActivity {
             if (user_role != null) {
 
                 if (user_role.equals("m")) {
+                    session.createLoginSession("Android Hive", "anroidhive@gmail.com");
                     Intent intent = new Intent(MainActivity.this, MemberActivity.class);
                     startActivity(intent);
                 }
                 else if (user_role.equals("d")) {
+                    session.createLoginSession("Android Hive", "anroidhive@gmail.com");
                     Intent intent = new Intent(MainActivity.this, DirectorActivity.class);
                     startActivity(intent);
                 }
