@@ -110,4 +110,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    protected void onNewIntent(Intent intent){
+        int i = intent.getIntExtra("FLAG", 0);
+
+        if(i == 0)
+            finish();
+
+    }
 }

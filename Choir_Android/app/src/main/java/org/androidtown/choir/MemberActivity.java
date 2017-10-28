@@ -8,32 +8,26 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 
 import java.io.IOException;
-import java.lang.reflect.Member;
-import java.util.HashMap;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-import static org.androidtown.choir.SongActivity.songIntent;
-//import static org.androidtown.choir.R.id.pdfView;
+import static java.security.AccessController.getContext;
 
 
 public class MemberActivity extends AppCompatActivity
-        implements SongAdapter.ListItemClickListener{
+        implements SongAdapter.ListItemClickListener {
 
     /*
      * References to RecyclerView and Adapter to reset the list to its
      * "pretty" state when the reset menu item is clicked.
      */
-    private SongAdapter mAdapter;
-    private RecyclerView mSongsList;
     private String songs[];
     private String fullSongName[];
-    private Toast mToast;
 
     SessionManager session;
 
@@ -44,6 +38,10 @@ public class MemberActivity extends AppCompatActivity
 
         session = new SessionManager(getApplicationContext());
 
+        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);*/
+
+
        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -51,7 +49,6 @@ public class MemberActivity extends AppCompatActivity
                 switch (item.getItemId()) {
                     case R.id.action_songs:
                         Toast.makeText(MemberActivity.this, "Songs", Toast.LENGTH_SHORT).show();
-                        session.logoutUser();
                         break;
                     case R.id.action_uniforms:
                         Toast.makeText(MemberActivity.this, "Uniforms", Toast.LENGTH_SHORT).show();
@@ -66,6 +63,8 @@ public class MemberActivity extends AppCompatActivity
 
         int num_songs = 0;
         String[] assetFiles = null;
+        SongAdapter mAdapter;
+        RecyclerView mSongsList;
 
         try {
             assetFiles = getAssets().list("songs");
@@ -114,6 +113,26 @@ public class MemberActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                session.logoutUser();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    @Override
     public void onListItemClick(int clickedItemIndex) {
 
         Intent intent = new SongActivity().songIntent(MemberActivity.this, fullSongName[clickedItemIndex]);
@@ -129,6 +148,15 @@ public class MemberActivity extends AppCompatActivity
             }
             //Log.i("val: ", songs[i].substring(0, endIdx - 3));
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("FLAG", 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 
 }
