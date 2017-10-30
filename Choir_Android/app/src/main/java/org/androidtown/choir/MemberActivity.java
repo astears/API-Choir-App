@@ -48,13 +48,13 @@ public class MemberActivity extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_songs:
-                        Toast.makeText(MemberActivity.this, "Songs", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_uniforms:
                         Toast.makeText(MemberActivity.this, "Uniforms", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_messages:
-                        Toast.makeText(MemberActivity.this, "Messages", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MemberActivity.this, AnnouncementsActivity.class);
+                        startActivity(intent);
                         break;
                 }
                 return true;
@@ -146,7 +146,6 @@ public class MemberActivity extends AppCompatActivity
                 songs[i] = songs[i].substring(0, endIdx - 3);
 
             }
-            //Log.i("val: ", songs[i].substring(0, endIdx - 3));
         }
     }
 

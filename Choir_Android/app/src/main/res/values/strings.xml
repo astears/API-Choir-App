@@ -16,4 +16,7 @@
     <string name="signup_confirm_password">Confirm Password</string>
     <string name="signup_email">Email</string>
     <string name="signup_submit">Submit</string>
+
+        <item name="visible" type="id"/>
+        <item name="masked" type="id"/>
 </resources>
