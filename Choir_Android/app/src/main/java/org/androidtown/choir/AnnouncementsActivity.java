@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AnnouncementsActivity extends AppCompatActivity {
-
+    // Test comment for testBranch
     private FirebaseListAdapter<Message> adapter;
     SessionManager session;
 
