@@ -92,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
             if (user_role != null) {
 
                 if (user_role.equals("m")) {
-                    session.createLoginSession("Android Hive", "anroidhive@gmail.com");
+                    session.createLoginSession();
                     Intent intent = new Intent(MainActivity.this, MemberActivity.class);
                     startActivity(intent);
                 }
                 else if (user_role.equals("d")) {
-                    session.createLoginSession("Android Hive", "anroidhive@gmail.com");
+                    session.createLoginSession();
                     Intent intent = new Intent(MainActivity.this, DirectorActivity.class);
                     startActivity(intent);
                 }
