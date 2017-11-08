@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -34,14 +35,17 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import java.util.List;
 
 public class AnnouncementsActivity extends AppCompatActivity {
-
+    // Test comment for testBranch
     private FirebaseListAdapter<Message> adapter;
     private SwipeMenuListView listOfMessages;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announcements);
+
+        session = new SessionManager(getApplicationContext());
 
 
         displayChatMessages();
@@ -155,6 +159,26 @@ public class AnnouncementsActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                session.logoutUser();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 
     @Override
     public void onBackPressed(){
