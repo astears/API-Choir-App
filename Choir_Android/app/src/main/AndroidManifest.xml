@@ -37,6 +37,7 @@
         <activity android:name=".AnnouncementsActivity"
             android:label="Messages">
         </activity>
+
     </application>
 
 </manifest>

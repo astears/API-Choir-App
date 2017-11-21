@@ -2,12 +2,18 @@ package org.androidtown.choir;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +26,18 @@ import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+// for swipe to delete
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+
+import java.util.List;
+
 public class AnnouncementsActivity extends AppCompatActivity {
     // Test comment for testBranch
     private FirebaseListAdapter<Message> adapter;
+    private SwipeMenuListView listOfMessages;
     SessionManager session;
 
     @Override
@@ -32,10 +47,52 @@ public class AnnouncementsActivity extends AppCompatActivity {
 
         session = new SessionManager(getApplicationContext());
 
+
         displayChatMessages();
 
         FloatingActionButton fab =
                 (FloatingActionButton)findViewById(R.id.fab);
+
+        // for swipe gesture
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+
+
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem(
+                        getApplicationContext());
+                // set item background
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+                        0x3F, 0x25)));
+                // set item width
+                deleteItem.setWidth(dp2px(90));
+                // set the delete icon to ic_delete
+                deleteItem.setIcon(R.drawable.ic_delete);
+                // add to menu
+                menu.addMenuItem(deleteItem);
+            }
+        };
+
+        listOfMessages.setMenuCreator(creator);
+
+        listOfMessages.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            // position stores the index of message in the list
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+
+
+                Toast.makeText(getApplicationContext(), "Deleted message at position " + position,
+                        Toast.LENGTH_LONG).show();
+
+                // grabs the position of message and remove it from firebase
+                adapter.getRef(position).removeValue();
+                return false;
+            }
+        });
+
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +134,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
 
     private void displayChatMessages() {
 
-        ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
+        listOfMessages = (SwipeMenuListView)findViewById(R.id.list_of_messages);
 
         adapter = new FirebaseListAdapter<Message>(this, Message.class,
                 R.layout.message, FirebaseDatabase.getInstance().getReference()) {
@@ -101,6 +158,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
         listOfMessages.setAdapter(adapter);
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,4 +188,11 @@ public class AnnouncementsActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
+
+    // to set width of delete item
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
+    }
+
 }
