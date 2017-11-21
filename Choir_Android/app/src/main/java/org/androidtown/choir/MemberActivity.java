@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -93,6 +94,8 @@ public class MemberActivity extends AppCompatActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         // COMPLETED (6) Use setLayoutManager on mNumbersList with the LinearLayoutManager we created above
         mSongsList.setLayoutManager(layoutManager);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, layoutManager.getOrientation());
+        mSongsList.addItemDecoration(itemDecoration);
 
         // Use setHasFixedSize(true) to designate that the contents of the RecyclerView won't change an item's size
         /*
