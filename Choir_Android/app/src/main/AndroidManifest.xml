@@ -34,10 +34,13 @@
         </activity>
         <activity android:name=".SongActivity">
         </activity>
-        <activity android:name=".AnnouncementsActivity"
-            android:label="Messages">
+        <activity
+            android:name=".AnnouncementsActivity"
+            android:label="Announcements">
         </activity>
-
+        <activity android:name=".UniformActivity"
+                  android:label="Uniforms">
+        </activity>
     </application>
 
 </manifest>

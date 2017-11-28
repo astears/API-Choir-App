@@ -51,11 +51,12 @@ public class MemberActivity extends AppCompatActivity
                     case R.id.action_songs:
                         break;
                     case R.id.action_uniforms:
-                        Toast.makeText(MemberActivity.this, "Uniforms", Toast.LENGTH_SHORT).show();
+                        Intent intent_uni = new Intent(MemberActivity.this, UniformActivity.class);
+                        startActivity(intent_uni);
                         break;
                     case R.id.action_messages:
-                        Intent intent = new Intent(MemberActivity.this, AnnouncementsActivity.class);
-                        startActivity(intent);
+                        Intent intent_announcements = new Intent(MemberActivity.this, AnnouncementsActivity.class);
+                        startActivity(intent_announcements);
                         break;
                 }
                 return true;

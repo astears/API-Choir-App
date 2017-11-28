@@ -1,32 +1,32 @@
 package org.androidtown.choir;
 
-
-import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
 
-import static android.R.attr.onClick;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
- * Created by astears on 10/23/17.
+ * Created by astears on 11/27/17.
  */
 
-public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> {
+public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
 
-    private static final String TAG = SongAdapter.class.getSimpleName();
+    private static final String TAG = CalendarAdapter.class.getSimpleName();
     private int mNumberItems;
-    private String[] songs;
+    private ArrayList<Date> mDates;
 
-    final private ListItemClickListener mOnClickListener;
+    //final private SongAdapter.ListItemClickListener mOnClickListener;
 
-    public interface ListItemClickListener {
+    /*public interface ListItemClickListener {
         void onListItemClick(int clickedItemIndex);
-    }
+    }*/
 
     /**
      * Constructor for SongAdapter that accepts a number of items to display and the specification
@@ -34,9 +34,9 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
      *
      * @param numberOfItems Number of items to display in list
      */
-    public SongAdapter(int numberOfItems, String[] assetFiles, ListItemClickListener listener) {
-        songs = assetFiles;
-        mOnClickListener = listener;
+    public CalendarAdapter(int numberOfItems, ArrayList<Date> dates/*, SongAdapter.ListItemClickListener listener*/) {
+        mDates = dates;
+        //mOnClickListener = listener;
         mNumberItems = numberOfItems;
     }
     /**
@@ -52,14 +52,14 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
      * @return A new NumberViewHolder that holds the View for each list item
      */
     @Override
-    public SongViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public CalendarAdapter.CalendarViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
-        int layoutIdForListItem = R.layout.song_list_item;
+        int layoutIdForListItem = R.layout.calendar_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
-        SongViewHolder viewHolder = new SongViewHolder(view);
+        CalendarAdapter.CalendarViewHolder viewHolder = new CalendarAdapter.CalendarViewHolder(view);
 
         return viewHolder;
     }
@@ -75,9 +75,9 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
      * @param position The position of the item within the adapter's data set.
      */
     @Override
-    public void onBindViewHolder(SongViewHolder holder, int position) {
+    public void onBindViewHolder(CalendarAdapter.CalendarViewHolder holder, int position) {
         Log.d(TAG, "#" + position);
-        holder.bind(songs[position]);
+        holder.bind(mDates.get(position));
     }
 
     /**
@@ -95,8 +95,8 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     /**
      * Cache of the children views for a list item.
      */
-    class SongViewHolder extends RecyclerView.ViewHolder
-        implements OnClickListener {
+    class CalendarViewHolder extends RecyclerView.ViewHolder
+            /*implements View.OnClickListener*/ {
 
         // Will display the position in the list, ie 0 through getItemCount() - 1
         TextView listItemNumberView;
@@ -106,29 +106,30 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
          * TextViews and set an onClickListener to listen for clicks. Those will be handled in the
          * onClick method below.
          * @param itemView The View that you inflated in
-         *                 {@link SongAdapter#onCreateViewHolder(ViewGroup, int)}
+         *                 {@link CalendarAdapter#onCreateViewHolder(ViewGroup, int)}
          */
-        public SongViewHolder(View itemView) {
+        public CalendarViewHolder(View itemView) {
             super(itemView);
 
-            listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number);
-            itemView.setOnClickListener(this);
+            listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number_calendar);
+            //itemView.setOnClickListener(this);
         }
 
         /**
          * A method we wrote for convenience. This method will take an integer as input and
          * use that integer to display the appropriate text within a list item.
-         * @param fileName Position of the item in the list
+         * @param d Position of the item in the list
          */
-        void bind(String fileName) {
-
-            listItemNumberView.setText(fileName);
+        void bind(Date d) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            listItemNumberView.setText(dateFormat.format(d).toString());
         }
 
-        @Override
+        /*@Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
-        }
+        }*/
     }
+
 }

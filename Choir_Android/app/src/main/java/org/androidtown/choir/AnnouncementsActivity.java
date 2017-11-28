@@ -122,7 +122,8 @@ public class AnnouncementsActivity extends AppCompatActivity {
                         startActivity(intent_songs);
                         break;
                     case R.id.action_uniforms:
-                        Toast.makeText(AnnouncementsActivity.this, "Uniforms", Toast.LENGTH_SHORT).show();
+                        Intent intent_uni = new Intent(AnnouncementsActivity.this, UniformActivity.class);
+                        startActivity(intent_uni);
                         break;
                     case R.id.action_messages:
                         break;

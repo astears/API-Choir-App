@@ -20,7 +20,7 @@
         android:id="@+id/action_messages"
         android:enabled="true"
         android:icon="@drawable/ic_action_message"
-        android:title="Messages"
+        android:title="Announcements"
         app:showAsAction="ifRoom" />
 
 </menu>
