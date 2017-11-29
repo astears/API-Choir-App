@@ -41,6 +41,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
     private FirebaseListAdapter<Message> adapter;
     private SwipeMenuListView listOfMessages;
     SessionManager session;
+    String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,23 +96,24 @@ public class AnnouncementsActivity extends AppCompatActivity {
 
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText input = (EditText)findViewById(R.id.input);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EditText input = (EditText) findViewById(R.id.input);
 
-                // Read the input field and push a new instance
-                // of Message to the Firebase database
-                FirebaseDatabase.getInstance()
-                        .getReference("Messages")
-                        .push()
-                        .setValue(new Message(input.getText().toString(), "Director")
-                        );
+                    // Read the input field and push a new instance
+                    // of Message to the Firebase database
+                    FirebaseDatabase.getInstance()
+                            .getReference("Messages")
+                            .push()
+                            .setValue(new Message(input.getText().toString(), "Director")
+                            );
 
-                // Clear the input
-                input.setText("");
-            }
-        });
+                    // Clear the input
+                    input.setText("");
+                }
+            });
+
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -120,10 +122,12 @@ public class AnnouncementsActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_songs:
                         Intent intent_songs = new Intent(AnnouncementsActivity.this, MemberActivity.class);
+
                         startActivity(intent_songs);
                         break;
                     case R.id.action_uniforms:
                         Intent intent_uni = new Intent(AnnouncementsActivity.this, UniformActivity.class);
+
                         startActivity(intent_uni);
                         break;
                     case R.id.action_messages:
@@ -152,7 +156,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
                 messageUser.setText(model.getMessageUser());
 
                 // Format the date before showing it
-                messageTime.setText(DateFormat.format("dd-MM",
+                messageTime.setText(DateFormat.format("MM-dd",
                         model.getMessageTime()));
             }
         };
@@ -164,7 +168,12 @@ public class AnnouncementsActivity extends AppCompatActivity {
     public void updateValue(int pos) {
         String key = adapter.getRef(pos).getKey();
         try {
-            FirebaseDatabase.getInstance().getReference().child("Messages").child("messageText").setValue("Updated val");
+            FirebaseDatabase.getInstance()
+                    .getReference("Uniforms")
+                    .push()
+                    .setValue(new Uniform("All Black", "All Blue")
+                    );
+            //FirebaseDatabase.getInstance().getReference().child("Messages").child("messageText").setValue("Updated val");
         } catch (Exception e) {
             e.printStackTrace();
         }

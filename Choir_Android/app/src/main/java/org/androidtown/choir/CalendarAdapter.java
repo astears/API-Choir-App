@@ -8,10 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by astears on 11/27/17.
@@ -22,12 +30,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     private static final String TAG = CalendarAdapter.class.getSimpleName();
     private int mNumberItems;
     private ArrayList<Date> mDates;
+    List<Uniform> universityList = new ArrayList<>();
 
     final private CalendarAdapter.ListItemClickListener mOnClickListener;
 
     public interface ListItemClickListener {
         void onListItemClick(int clickedItemIndex);
     }
+
+
 
     /**
      * Constructor for SongAdapter that accepts a number of items to display and the specification
@@ -39,6 +50,25 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         mDates = dates;
         mOnClickListener = listener;
         mNumberItems = numberOfItems;
+
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Uniforms");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                universityList.clear();
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    Uniform university = postSnapshot.getValue(Uniform.class);
+                    universityList.add(university);
+
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: ");
+            }
+        });
     }
     /**
      *
@@ -78,7 +108,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     @Override
     public void onBindViewHolder(CalendarAdapter.CalendarViewHolder holder, int position) {
         Log.d(TAG, "#" + position);
-        holder.bind(mDates.get(position));
+        holder.bind(mDates.get(position), position);
     }
 
     /**
@@ -120,9 +150,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
             listDayView = (TextView) itemView.findViewById(R.id.tv_item_day);
             listDayOfWeekView = (TextView) itemView.findViewById(R.id.tv_item_day_of_week);
-            //listMenUniform = (TextView) itemView.findViewById(R.id.tv_item_men_uniform);
+            listMenUniform = (TextView) itemView.findViewById(R.id.tv_item_men_uniform);
             listMen = (TextView) itemView.findViewById(R.id.tv_item_men);
-            //listWomenUniform = (TextView) itemView.findViewById(R.id.tv_item_women_uniform);
+            listWomenUniform = (TextView) itemView.findViewById(R.id.tv_item_women_uniform);
             listWomen = (TextView) itemView.findViewById(R.id.tv_item_women);
             itemView.setOnClickListener(this);
         }
@@ -132,7 +162,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
          * use that integer to display the appropriate text within a list item.
          * @param d Position of the item in the list
          */
-        void bind(Date d) {
+        void bind(Date d, final int position) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("d");
             String day = dateFormat.format(d).toString();
             dateFormat = new SimpleDateFormat("E");
@@ -146,6 +176,19 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             //listMenUniform.setText("All Black");
             listWomen.setText("Women's Uniform");
             //listWomenUniform.setText("All Black");
+
+            int i = 0;
+            for (Uniform university : universityList) {
+                if (i == position) {
+                    listMenUniform.setText(university.getMensUniform());
+                    listWomenUniform.setText(university.getWomensUniform());
+                    Log.i("ds", String.valueOf(i) + " " + String.valueOf(position));
+                } else {
+
+                }
+                i++;
+            }
+
         }
 
         @Override

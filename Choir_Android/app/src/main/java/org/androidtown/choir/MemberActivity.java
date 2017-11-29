@@ -29,7 +29,6 @@ public class MemberActivity extends AppCompatActivity
      */
     private String songs[];
     private String fullSongName[];
-
     SessionManager session;
 
     @Override

@@ -13,6 +13,9 @@ public class Uniform {
         womensUniform = women;
     }
 
+    public Uniform () {}
+
+
     public String getMensUniform() {
         return mensUniform;
     }

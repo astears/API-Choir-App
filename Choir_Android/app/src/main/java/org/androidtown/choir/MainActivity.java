@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (user_role.equals("d")) {
                     session.createLoginSession();
-                    Intent intent = new Intent(MainActivity.this, DirectorActivity.class);
+                    Intent intent = new Intent(MainActivity.this, MemberActivity.class);
                     startActivity(intent);
                 }
                 else if (user_role.equals("Incorrect Username")) {
