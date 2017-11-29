@@ -120,9 +120,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
             listDayView = (TextView) itemView.findViewById(R.id.tv_item_day);
             listDayOfWeekView = (TextView) itemView.findViewById(R.id.tv_item_day_of_week);
-            listMenUniform = (TextView) itemView.findViewById(R.id.tv_item_men_uniform);
+            //listMenUniform = (TextView) itemView.findViewById(R.id.tv_item_men_uniform);
             listMen = (TextView) itemView.findViewById(R.id.tv_item_men);
-            listWomenUniform = (TextView) itemView.findViewById(R.id.tv_item_women_uniform);
+            //listWomenUniform = (TextView) itemView.findViewById(R.id.tv_item_women_uniform);
             listWomen = (TextView) itemView.findViewById(R.id.tv_item_women);
             itemView.setOnClickListener(this);
         }
@@ -140,12 +140,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             dateFormat = new SimpleDateFormat("M");
             String month = dateFormat.format(d).toString();
 
-            listDayView.setText(month+ "/" + day);
+            listDayView.setText(month + "/" + day);
             listDayOfWeekView.setText(weekDay);
             listMen.setText("Men's Uniform");
-            listMenUniform.setText("All Black");
+            //listMenUniform.setText("All Black");
             listWomen.setText("Women's Uniform");
-            listWomenUniform.setText("All Black");
+            //listWomenUniform.setText("All Black");
         }
 
         @Override

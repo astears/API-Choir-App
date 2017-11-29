@@ -5,27 +5,27 @@ package org.androidtown.choir;
  */
 
 public class Uniform {
-    private String mens;
-    private String womens;
+    private String mensUniform;
+    private String womensUniform;
 
     public Uniform(String men, String women) {
-        mens = men;
-        womens = women;
+        mensUniform = men;
+        womensUniform = women;
     }
 
-    public String getMens() {
-        return mens;
+    public String getMensUniform() {
+        return mensUniform;
     }
 
-    public void setMens(String messageText) {
-        this.mens = messageText;
+    public void setMensUniform(String uniform) {
+        this.mensUniform = uniform;
     }
 
-    public String getWomens() {
-        return womens;
+    public String getWomensUniform() {
+        return womensUniform;
     }
 
-    public void setWomens(String messageUser) {
-        this.womens = messageUser;
+    public void setWomensUniform(String uniform) {
+        this.womensUniform = uniform;
     }
 }

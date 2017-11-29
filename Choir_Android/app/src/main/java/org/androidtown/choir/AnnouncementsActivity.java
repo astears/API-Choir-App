@@ -41,7 +41,6 @@ public class AnnouncementsActivity extends AppCompatActivity {
     private FirebaseListAdapter<Message> adapter;
     private SwipeMenuListView listOfMessages;
     SessionManager session;
-    FirebaseApp secondApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +48,6 @@ public class AnnouncementsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_announcements);
 
         session = new SessionManager(getApplicationContext());
-
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setApplicationId("1:152084953827:android:c2ef3a332f223331")
-                .setApiKey("AIzaSyAKPpGkS1JJBzzcsweeP9zYjCc_0ek-z-U")
-                .setDatabaseUrl("https://choir-messages-975b3.firebaseio.com/")
-                .build();
-        FirebaseApp.initializeApp(this, options, "second_database_name");
-        secondApp = FirebaseApp.getInstance("second_database_name");
 
         displayChatMessages();
 
@@ -173,11 +164,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
     public void updateValue(int pos) {
         String key = adapter.getRef(pos).getKey();
         try {
-            FirebaseDatabase.getInstance(secondApp).getReference()
-                    .push()
-                    .setValue(new Uniform("All Black", "All Grey")
-                    );
-            //FirebaseDatabase.getInstance().getReference().child().child("messageText").setValue("Updated val");
+            FirebaseDatabase.getInstance().getReference().child("Messages").child("messageText").setValue("Updated val");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -196,7 +183,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                updateValue(2);
+                updateValue(0);
                 //session.logoutUser();
                 return true;
 

@@ -10,10 +10,18 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,6 +29,8 @@ import java.util.Date;
 
 public class UniformActivity extends AppCompatActivity
     implements CalendarAdapter.ListItemClickListener {
+
+    private FirebaseListAdapter<Uniform> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +61,14 @@ public class UniformActivity extends AppCompatActivity
         ArrayList<Date> dates = null;
         CalendarAdapter mAdapter;
         RecyclerView mCalendarList;
+        ArrayList<Uniform> uniforms;
 
         Date now = new Date();
         dates = Dates.getDates();
         dates.add(now);
         num_days = dates.size();
         Log.i("num days ", String.valueOf(num_days));
+
         /*
          * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
          * do things like set the adapter of the RecyclerView and toggle the visibility.
@@ -71,12 +83,36 @@ public class UniformActivity extends AppCompatActivity
 
         mCalendarList.setHasFixedSize(true);
 
+        //displayUniforms();
+
         mAdapter = new CalendarAdapter(num_days, dates, this);
 
         // Set the SongAdapter you created on mNumbersList
         mCalendarList.setAdapter(mAdapter);
 
+
     }
+
+    /*private void displayUniforms() {
+
+        //ListView rv = (ListView) findViewById(R.id.rv_calendar);
+        adapter = new FirebaseListAdapter<Uniform>(this, Uniform.class,
+                R.layout.calendar_item, FirebaseDatabase.getInstance().getReference("Uniforms")) {
+            @Override
+            protected void populateView(View v, Uniform model, int position) {
+                // Get references to the views of message.xml
+                TextView mensUniform = (TextView)v.findViewById(R.id.tv_item_men_uniform);
+                TextView womensUniform = (TextView)v.findViewById(R.id.tv_item_women_uniform);
+
+                // Set their text
+                mensUniform.setText(model.getMensUniform());
+                womensUniform.setText(model.getWomensUniform());
+
+            }
+        };
+
+        //rv.setAdapter(adapter);
+    }*/
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
