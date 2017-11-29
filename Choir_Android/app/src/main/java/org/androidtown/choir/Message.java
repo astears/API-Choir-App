@@ -3,7 +3,7 @@ package org.androidtown.choir;
 import java.util.Date;
 
 /**
- * Created by astears on 10/30/17.
+ * Created by astears on 11/28/17.
  */
 
 public class Message {

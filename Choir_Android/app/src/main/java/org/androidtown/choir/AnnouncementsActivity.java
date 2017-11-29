@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -39,6 +41,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
     private FirebaseListAdapter<Message> adapter;
     private SwipeMenuListView listOfMessages;
     SessionManager session;
+    FirebaseApp secondApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,13 @@ public class AnnouncementsActivity extends AppCompatActivity {
 
         session = new SessionManager(getApplicationContext());
 
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setApplicationId("1:152084953827:android:c2ef3a332f223331")
+                .setApiKey("AIzaSyAKPpGkS1JJBzzcsweeP9zYjCc_0ek-z-U")
+                .setDatabaseUrl("https://choir-messages-975b3.firebaseio.com/")
+                .build();
+        FirebaseApp.initializeApp(this, options, "second_database_name");
+        secondApp = FirebaseApp.getInstance("second_database_name");
 
         displayChatMessages();
 
@@ -102,7 +112,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
                 // Read the input field and push a new instance
                 // of Message to the Firebase database
                 FirebaseDatabase.getInstance()
-                        .getReference()
+                        .getReference("Messages")
                         .push()
                         .setValue(new Message(input.getText().toString(), "Director")
                         );
@@ -138,7 +148,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
         listOfMessages = (SwipeMenuListView)findViewById(R.id.list_of_messages);
 
         adapter = new FirebaseListAdapter<Message>(this, Message.class,
-                R.layout.message, FirebaseDatabase.getInstance().getReference()) {
+                R.layout.message, FirebaseDatabase.getInstance().getReference("Messages")) {
             @Override
             protected void populateView(View v, Message model, int position) {
                 // Get references to the views of message.xml
@@ -151,12 +161,26 @@ public class AnnouncementsActivity extends AppCompatActivity {
                 messageUser.setText(model.getMessageUser());
 
                 // Format the date before showing it
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
+                messageTime.setText(DateFormat.format("dd-MM",
                         model.getMessageTime()));
             }
         };
 
         listOfMessages.setAdapter(adapter);
+
+    }
+
+    public void updateValue(int pos) {
+        String key = adapter.getRef(pos).getKey();
+        try {
+            FirebaseDatabase.getInstance(secondApp).getReference()
+                    .push()
+                    .setValue(new Uniform("All Black", "All Grey")
+                    );
+            //FirebaseDatabase.getInstance().getReference().child().child("messageText").setValue("Updated val");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -172,7 +196,8 @@ public class AnnouncementsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                session.logoutUser();
+                updateValue(2);
+                //session.logoutUser();
                 return true;
 
             default:

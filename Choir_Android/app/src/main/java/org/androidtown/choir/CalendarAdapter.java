@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -22,11 +23,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     private int mNumberItems;
     private ArrayList<Date> mDates;
 
-    //final private SongAdapter.ListItemClickListener mOnClickListener;
+    final private CalendarAdapter.ListItemClickListener mOnClickListener;
 
-    /*public interface ListItemClickListener {
+    public interface ListItemClickListener {
         void onListItemClick(int clickedItemIndex);
-    }*/
+    }
 
     /**
      * Constructor for SongAdapter that accepts a number of items to display and the specification
@@ -34,9 +35,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
      *
      * @param numberOfItems Number of items to display in list
      */
-    public CalendarAdapter(int numberOfItems, ArrayList<Date> dates/*, SongAdapter.ListItemClickListener listener*/) {
+    public CalendarAdapter(int numberOfItems, ArrayList<Date> dates, CalendarAdapter.ListItemClickListener listener) {
         mDates = dates;
-        //mOnClickListener = listener;
+        mOnClickListener = listener;
         mNumberItems = numberOfItems;
     }
     /**
@@ -96,10 +97,16 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
      * Cache of the children views for a list item.
      */
     class CalendarViewHolder extends RecyclerView.ViewHolder
-            /*implements View.OnClickListener*/ {
+            implements View.OnClickListener {
 
         // Will display the position in the list, ie 0 through getItemCount() - 1
-        TextView listItemNumberView;
+        TextView listDayView;
+        TextView listDayOfWeekView;
+        TextView listMenUniform;
+        TextView listMen;
+        TextView listWomenUniform;
+        TextView listWomen;
+
 
         /**
          * Constructor for our ViewHolder. Within this constructor, we get a reference to our
@@ -111,8 +118,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         public CalendarViewHolder(View itemView) {
             super(itemView);
 
-            listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number_calendar);
-            //itemView.setOnClickListener(this);
+            listDayView = (TextView) itemView.findViewById(R.id.tv_item_day);
+            listDayOfWeekView = (TextView) itemView.findViewById(R.id.tv_item_day_of_week);
+            listMenUniform = (TextView) itemView.findViewById(R.id.tv_item_men_uniform);
+            listMen = (TextView) itemView.findViewById(R.id.tv_item_men);
+            listWomenUniform = (TextView) itemView.findViewById(R.id.tv_item_women_uniform);
+            listWomen = (TextView) itemView.findViewById(R.id.tv_item_women);
+            itemView.setOnClickListener(this);
         }
 
         /**
@@ -121,15 +133,26 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
          * @param d Position of the item in the list
          */
         void bind(Date d) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            listItemNumberView.setText(dateFormat.format(d).toString());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("d");
+            String day = dateFormat.format(d).toString();
+            dateFormat = new SimpleDateFormat("E");
+            String weekDay = dateFormat.format(d).toString();
+            dateFormat = new SimpleDateFormat("M");
+            String month = dateFormat.format(d).toString();
+
+            listDayView.setText(month+ "/" + day);
+            listDayOfWeekView.setText(weekDay);
+            listMen.setText("Men's Uniform");
+            listMenUniform.setText("All Black");
+            listWomen.setText("Women's Uniform");
+            listWomenUniform.setText("All Black");
         }
 
-        /*@Override
+        @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
-        }*/
+        }
     }
 
 }

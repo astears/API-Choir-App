@@ -121,7 +121,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
          * @param fileName Position of the item in the list
          */
         void bind(String fileName) {
-
             listItemNumberView.setText(fileName);
         }
 

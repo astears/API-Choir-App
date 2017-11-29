@@ -3,11 +3,20 @@
              xmlns:tools="http://schemas.android.com/tools"
              xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:padding="16dp">
+             android:layout_height="wrap_content">
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
     <TextView
-        android:id="@+id/tv_item_number_calendar"
+        android:id="@+id/tv_item_day"
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,4 +24,93 @@
         android:fontFamily="sans-serif"
         android:textSize="20sp"
         tools:text="#42"/>
+        <TextView
+            android:id="@+id/tv_item_day_of_week"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="sans-serif"
+            android:textSize="15sp"
+            tools:text="#42"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="15dp"
+            app:cardBackgroundColor="@color/authui_colorPrimary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_item_men"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"
+                android:text="Men's Uniform"/>
+
+
+                <EditText
+                    android:id="@+id/tv_item_men_uniform"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="18dp"
+                    android:text="All black"/>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="15dp"
+            app:cardBackgroundColor="@android:color/darker_gray">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_item_women"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="18dp"
+                    android:text="Women's Uniform"/>
+
+
+                <EditText
+                    android:id="@+id/tv_item_women_uniform"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="18dp"
+                    android:text="All black"/>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
 </FrameLayout>

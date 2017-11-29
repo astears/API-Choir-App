@@ -1,5 +1,6 @@
 package org.androidtown.choir;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,11 +13,14 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
-public class UniformActivity extends AppCompatActivity {
+public class UniformActivity extends AppCompatActivity
+    implements CalendarAdapter.ListItemClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +33,10 @@ public class UniformActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_songs:
+                        Intent intent_songs = new Intent(UniformActivity.this, MemberActivity.class);
+                        startActivity(intent_songs);
                         break;
                     case R.id.action_uniforms:
-                        Intent intent_uni = new Intent(UniformActivity.this, UniformActivity.class);
-                        startActivity(intent_uni);
                         break;
                     case R.id.action_messages:
                         Intent intent_announcements = new Intent(UniformActivity.this, AnnouncementsActivity.class);
@@ -48,7 +52,9 @@ public class UniformActivity extends AppCompatActivity {
         CalendarAdapter mAdapter;
         RecyclerView mCalendarList;
 
+        Date now = new Date();
         dates = Dates.getDates();
+        dates.add(now);
         num_days = dates.size();
         Log.i("num days ", String.valueOf(num_days));
         /*
@@ -60,16 +66,23 @@ public class UniformActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         // COMPLETED (6) Use setLayoutManager on mNumbersList with the LinearLayoutManager we created above
         mCalendarList.setLayoutManager(layoutManager);
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, layoutManager.getOrientation());
-        mCalendarList.addItemDecoration(itemDecoration);
+        //DividerItemDecoration itemDecoration = new DividerItemDecoration(this, layoutManager.getOrientation());
+        //mCalendarList.addItemDecoration(itemDecoration);
 
         mCalendarList.setHasFixedSize(true);
 
-        mAdapter = new CalendarAdapter(num_days, dates);
+        mAdapter = new CalendarAdapter(num_days, dates, this);
 
         // Set the SongAdapter you created on mNumbersList
         mCalendarList.setAdapter(mAdapter);
 
+    }
+
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+
+        /*Toast.makeText(getApplicationContext(), "item " + String.valueOf(clickedItemIndex) + " was clicked",
+                Toast.LENGTH_LONG).show();*/
     }
 
     @Override
