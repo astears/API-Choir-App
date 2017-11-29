@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ public class UniformActivity extends AppCompatActivity
     implements CalendarAdapter.ListItemClickListener {
 
     private FirebaseListAdapter<Uniform> adapter;
+    private FloatingActionButton button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,19 @@ public class UniformActivity extends AppCompatActivity
                 return true;
             }
         });
+
+
+
+
+
+       /* button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Add button clicked!", Toast.LENGTH_LONG).show();
+            }
+
+
+        });*/
 
         int num_days = 0;
         ArrayList<Date> dates = null;
@@ -92,6 +108,7 @@ public class UniformActivity extends AppCompatActivity
 
 
     }
+
 
     /*private void displayUniforms() {
 
@@ -141,4 +158,7 @@ public class UniformActivity extends AppCompatActivity
         }
     }
 
+    public void toast_add_button(View view) {
+        Toast.makeText(getApplicationContext(), "Add button clicked!", Toast.LENGTH_LONG).show();
+    }
 }
