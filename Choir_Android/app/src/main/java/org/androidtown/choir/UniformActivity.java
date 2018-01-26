@@ -39,11 +39,14 @@ public class UniformActivity extends AppCompatActivity
 
     private FirebaseListAdapter<Uniform> adapter;
     private FloatingActionButton button;
-
+    CalendarAdapter mAdapter;
+    SessionManager session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uniform);
+
+        session = new SessionManager(getApplicationContext());
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -78,13 +81,13 @@ public class UniformActivity extends AppCompatActivity
 
         int num_days = 0;
         ArrayList<Date> dates = null;
-        CalendarAdapter mAdapter;
+        //CalendarAdapter mAdapter;
         RecyclerView mCalendarList;
         ArrayList<Uniform> uniforms;
 
         Date now = new Date();
         dates = Dates.getDates();
-        dates.add(now);
+        //dates.add(now);
         num_days = dates.size();
         Log.i("num days ", String.valueOf(num_days));
 
@@ -131,11 +134,51 @@ public class UniformActivity extends AppCompatActivity
     }*/
 
     @Override
-    public void onListItemClick(int clickedItemIndex) {
+    public void onListItemClick(final int clickedItemIndex) {
 
         /*Toast.makeText(getApplicationContext(), "item " + String.valueOf(clickedItemIndex) + " was clicked",
                 Toast.LENGTH_LONG).show();*/
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LinearLayout layout = new LinearLayout(getApplicationContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+
+        builder.setTitle("Uniforms");
+        final EditText mensUniformEditText = new EditText(this);
+        layout.addView(mensUniformEditText);
+        mensUniformEditText.setHint("Enter Men's Uniform");
+
+        final EditText womensUniformEditText = new EditText(this);
+        layout.addView(womensUniformEditText);
+        womensUniformEditText.setHint("Enter Women's Uniform");
+
+        builder.setView(layout);
+
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //Toast.makeText(getApplicationContext(), "Men: " + mensUniformEditText.getText() + "\nWomen: " + womensUniformEditText.getText(),
+                // Toast.LENGTH_LONG).show();
+                try {
+                    //String key = adapter.getRef(clickedItemIndex).getKey();
+                    FirebaseDatabase.getInstance().getReference("Uniforms")
+                            .push().setValue(new Uniform(mensUniformEditText.getText().toString(),
+                            womensUniformEditText.getText().toString()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        builder.setNegativeButton("Cancel",  new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        builder.show();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,46 +191,15 @@ public class UniformActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                //session.logoutUser();
+                session.logoutUser();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
 
         }
+
+
     }
 
-    public void add_uniforms(View view) {
-        Toast.makeText(getApplicationContext(), "Add button clicked!", Toast.LENGTH_LONG).show();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LinearLayout layout = new LinearLayout(getApplicationContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
-
-
-        builder.setTitle("Uniforms");
-        final EditText mensUniformEditText = new EditText(this);
-        layout.addView(mensUniformEditText);
-        mensUniformEditText.setHint("Men's Uniform...");
-
-        final EditText womensUniformEditText = new EditText(this);
-        layout.addView(womensUniformEditText);
-        womensUniformEditText.setHint("Women's Uniform...");
-
-        builder.setView(layout);
-
-
-//        mensUniformEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-//        builder.setView(mensUniformEditText);
-//
-
-
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                Toast.makeText(getApplicationContext(), "Men: " + mensUniformEditText.getText() + "\nWomen: " + womensUniformEditText.getText(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-        builder.show();
-    }
 }

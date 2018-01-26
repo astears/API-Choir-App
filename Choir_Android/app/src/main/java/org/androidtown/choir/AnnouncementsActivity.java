@@ -85,8 +85,8 @@ public class AnnouncementsActivity extends AppCompatActivity {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
 
 
-                Toast.makeText(getApplicationContext(), "Deleted message at position " + position,
-                        Toast.LENGTH_LONG).show();
+                /*Toast.makeText(getApplicationContext(), "Deleted message at position " + position,
+                        Toast.LENGTH_LONG).show();*/
 
                 // grabs the position of message and remove it from firebase
                 adapter.getRef(position).removeValue();
@@ -171,7 +171,7 @@ public class AnnouncementsActivity extends AppCompatActivity {
             FirebaseDatabase.getInstance()
                     .getReference("Uniforms")
                     .push()
-                    .setValue(new Uniform("All Black", "All Blue")
+                    .setValue(new Message("None specified", "None specified")
                     );
             //FirebaseDatabase.getInstance().getReference().child("Messages").child("messageText").setValue("Updated val");
         } catch (Exception e) {
@@ -192,8 +192,8 @@ public class AnnouncementsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                updateValue(0);
-                //session.logoutUser();
+                //updateValue(0);
+                session.logoutUser();
                 return true;
 
             default:

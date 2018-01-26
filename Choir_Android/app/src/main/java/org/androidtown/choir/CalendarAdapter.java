@@ -51,24 +51,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         mOnClickListener = listener;
         mNumberItems = numberOfItems;
 
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Uniforms");
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                universityList.clear();
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    Uniform university = postSnapshot.getValue(Uniform.class);
-                    universityList.add(university);
-
-
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: ");
-            }
-        });
     }
     /**
      *
@@ -177,17 +159,33 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             listWomen.setText("Women's Uniform");
             //listWomenUniform.setText("All Black");
 
-            int i = 0;
-            for (Uniform university : universityList) {
-                if (i == position) {
-                    listMenUniform.setText(university.getMensUniform());
-                    listWomenUniform.setText(university.getWomensUniform());
-                    Log.i("ds", String.valueOf(i) + " " + String.valueOf(position));
-                } else {
+            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Uniforms");
 
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    //universityList.clear();
+                    int i = 0;
+                    for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                        Uniform university = postSnapshot.getValue(Uniform.class);
+                        universityList.add(university);
+
+                            if (i == position) {
+                                listMenUniform.setText(university.getMensUniform());
+                                listWomenUniform.setText(university.getWomensUniform());
+                                Log.i("ds", String.valueOf(i) + " " + String.valueOf(position));
+                            } else {
+
+                            }
+                            i++;
+
+                    }
                 }
-                i++;
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: ");
+                }
+            });
 
         }
 
