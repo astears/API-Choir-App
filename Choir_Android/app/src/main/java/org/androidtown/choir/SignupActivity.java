@@ -2,12 +2,22 @@ package org.androidtown.choir;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONObject;
 
@@ -24,10 +34,13 @@ public class SignupActivity extends AppCompatActivity {
         String email;
     }
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public void onSignupSubmit(View view) {
@@ -54,8 +67,44 @@ public class SignupActivity extends AppCompatActivity {
             Toast.makeText(this, "Password fields don't match", Toast.LENGTH_SHORT).show();
         }
         else {
-            new SignupTask().execute(firstName, lastName, username, password, email);
+            //new SignupTask().execute(firstName, lastName, username, password, email);
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("TAG", "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                Intent i = new Intent(SignupActivity.this, MemberActivity.class);
+                                startActivity(i);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                try {
+                                    throw task.getException();
+                                } catch(FirebaseAuthWeakPasswordException e) {
+                                    Toast.makeText(SignupActivity.this, e.getReason(),
+                                            Toast.LENGTH_SHORT).show();
+                                } catch(FirebaseAuthInvalidCredentialsException e) {
+                                    Toast.makeText(SignupActivity.this, e.getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                } catch(FirebaseAuthUserCollisionException e) {
+                                    Toast.makeText(SignupActivity.this, e.getMessage(),
+                                            Toast.LENGTH_LONG).show();
+                                } catch(Exception e) {
+                                    Log.e("Sign up error", e.getMessage());
+                                    Toast.makeText(SignupActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        }
+                    });
         }
+
+    }
+
+    public void onTermsConditionsClick(View view) {
 
     }
 

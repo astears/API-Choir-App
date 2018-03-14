@@ -14,31 +14,38 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-        </activity>
-        <activity
-            android:name=".MemberActivity"
-            android:label="Hymns">
+        <activity android:name=".MainActivity"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MemberActivity"
+            android:label="Hymns">
+        </activity>
         <activity android:name=".DirectorActivity">
         </activity>
         <activity
             android:name=".SignupActivity"
-            android:label="Sign Up">
+            android:label="Sign Up"
+            android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <activity android:name=".SongActivity">
         </activity>
         <activity
             android:name=".AnnouncementsActivity"
-            android:label="Announcements">
+            android:label="Announcements"
+            android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <activity android:name=".UniformActivity"
                   android:label="Uniforms">
+        </activity>
+        <activity android:name=".ResetPassword"
+                  android:label="Recover Password"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
     </application>
 

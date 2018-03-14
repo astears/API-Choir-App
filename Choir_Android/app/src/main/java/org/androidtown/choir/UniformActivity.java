@@ -7,12 +7,17 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -23,11 +28,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -35,41 +42,24 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class UniformActivity extends AppCompatActivity
-        implements CalendarAdapter.ListItemClickListener {
+        implements CalendarAdapter.ListItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseListAdapter<Uniform> adapter;
     private FloatingActionButton button;
     CalendarAdapter mAdapter;
     SessionManager session;
+
+    Toolbar tbl1;
+    TextView tv1;
+    RelativeLayout rl1;
+    View navHeader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uniform);
 
-        session = new SessionManager(getApplicationContext());
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_songs:
-                        Intent intent_songs = new Intent(UniformActivity.this, MemberActivity.class);
-                        startActivity(intent_songs);
-                        break;
-                    case R.id.action_uniforms:
-                        break;
-                    case R.id.action_messages:
-                        Intent intent_announcements = new Intent(UniformActivity.this, AnnouncementsActivity.class);
-                        startActivity(intent_announcements);
-                        break;
-                }
-                return true;
-            }
-        });
-
-
-
+        //session = new SessionManager(getApplicationContext());
 
 
        /* button.setOnClickListener(new View.OnClickListener() {
@@ -112,26 +102,25 @@ public class UniformActivity extends AppCompatActivity
         // Set the SongAdapter you created on mNumbersList
         mCalendarList.setAdapter(mAdapter);
 
+        //Toolbar
+        tbl1 = (Toolbar) findViewById(R.id.tbl_one_mpdm);
+        setSupportActionBar(tbl1);
+        getSupportActionBar().setTitle("");
 
+
+        //TextView
+        tv1 = (TextView) findViewById(R.id.tv_one_mpdm);
+
+        //Nav Drawer
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_one_mpdm);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, tbl1, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_one_mpdm);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
-
-    /*private void displayUniforms() {
-        //ListView rv = (ListView) findViewById(R.id.rv_calendar);
-        adapter = new FirebaseListAdapter<Uniform>(this, Uniform.class,
-                R.layout.calendar_item, FirebaseDatabase.getInstance().getReference("Uniforms")) {
-            @Override
-            protected void populateView(View v, Uniform model, int position) {
-                // Get references to the views of message.xml
-                TextView mensUniform = (TextView)v.findViewById(R.id.tv_item_men_uniform);
-                TextView womensUniform = (TextView)v.findViewById(R.id.tv_item_women_uniform);
-                // Set their text
-                mensUniform.setText(model.getMensUniform());
-                womensUniform.setText(model.getWomensUniform());
-            }
-        };
-        //rv.setAdapter(adapter);
-    }*/
 
     @Override
     public void onListItemClick(final int clickedItemIndex) {
@@ -183,23 +172,60 @@ public class UniformActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolbar, menu);
+        //getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_message_dm) {
+            Intent i = new Intent(this, AnnouncementsActivity.class);
+            startActivity(i);
+            return true;
+        }
+        else if (id == R.id.nav_hymns_dm) {
+            Intent i = new Intent(this, MemberActivity.class);
+            startActivity(i);
+        }
+//        else if (id == R.id.nav_uniforms_dm) {
+//            /*Intent i = new Intent(this, UniformActivity.class);
+//            startActivity(i);*/
+//            return true;
+//        }
+        else if (id == R.id.nav_logout_dm) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("FLAG", 0);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_one_mpdm);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_logout:
-                session.logoutUser();
-                return true;
+    public void onBackPressed() {
 
-            default:
-                return super.onOptionsItemSelected(item);
+       /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_one_mpdm);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            //super.onBackPressed();
+        }*/
 
-        }
-
-
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("FLAG", 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 
 }

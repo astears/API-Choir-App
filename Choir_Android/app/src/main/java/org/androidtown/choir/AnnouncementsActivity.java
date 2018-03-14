@@ -9,8 +9,13 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
@@ -19,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,19 +42,25 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 import java.util.List;
 
-public class AnnouncementsActivity extends AppCompatActivity {
+public class AnnouncementsActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
     // Test comment for testBranch
     private FirebaseListAdapter<Message> adapter;
     private SwipeMenuListView listOfMessages;
     SessionManager session;
     String role;
 
+    Toolbar tbl1;
+    TextView tv1;
+    RelativeLayout rl1;
+    View navHeader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announcements);
 
-        session = new SessionManager(getApplicationContext());
+        //session = new SessionManager(getApplicationContext());
 
         displayChatMessages();
 
@@ -115,27 +127,45 @@ public class AnnouncementsActivity extends AppCompatActivity {
             });
 
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_songs:
-                        Intent intent_songs = new Intent(AnnouncementsActivity.this, MemberActivity.class);
+//        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.action_songs:
+//                        Intent intent_songs = new Intent(AnnouncementsActivity.this, MemberActivity.class);
+//
+//                        startActivity(intent_songs);
+//                        break;
+//                    case R.id.action_uniforms:
+//                        Intent intent_uni = new Intent(AnnouncementsActivity.this, UniformActivity.class);
+//
+//                        startActivity(intent_uni);
+//                        break;
+//                    case R.id.action_messages:
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
 
-                        startActivity(intent_songs);
-                        break;
-                    case R.id.action_uniforms:
-                        Intent intent_uni = new Intent(AnnouncementsActivity.this, UniformActivity.class);
+        //Toolbar
+        tbl1 = (Toolbar) findViewById(R.id.tbl_one_mpdm);
+        setSupportActionBar(tbl1);
+        getSupportActionBar().setTitle("");
 
-                        startActivity(intent_uni);
-                        break;
-                    case R.id.action_messages:
-                        break;
-                }
-                return true;
-            }
-        });
+
+        //TextView
+        tv1 = (TextView) findViewById(R.id.tv_one_mpdm);
+
+        //Nav Drawer
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_one_mpdm);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, tbl1, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_one_mpdm);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void displayChatMessages() {
@@ -184,11 +214,11 @@ public class AnnouncementsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolbar, menu);
+        //getMenuInflater().inflate(R.menu.toolbar, menu);
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
@@ -200,10 +230,51 @@ public class AnnouncementsActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }*/
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_message_dm) {
+            /*Intent i = new Intent(this, AnnouncementsActivity.class);
+            startActivity(i);
+            return true;*/
+        }
+        else if (id == R.id.nav_hymns_dm) {
+            Intent i = new Intent(this, MemberActivity.class);
+            startActivity(i);
+        }
+//        else if (id == R.id.nav_uniforms_dm) {
+//            Intent i = new Intent(this, UniformActivity.class);
+//            startActivity(i);
+//            return true;
+//        }
+        else if (id == R.id.nav_logout_dm) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("FLAG", 0);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_one_mpdm);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
     public void onBackPressed(){
+        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_one_mpdm);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            //super.onBackPressed();
+        }*/
+
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("FLAG", 0);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

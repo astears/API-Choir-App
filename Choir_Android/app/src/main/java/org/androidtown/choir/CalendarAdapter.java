@@ -164,7 +164,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    //universityList.clear();
                     int i = 0;
                     for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                         Uniform university = postSnapshot.getValue(Uniform.class);
@@ -178,7 +177,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
                             }
                             i++;
-
                     }
                 }
                 @Override

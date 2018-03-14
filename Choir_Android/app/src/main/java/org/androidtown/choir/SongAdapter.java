@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static android.R.attr.onClick;
 
 /**
@@ -20,7 +24,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
     private static final String TAG = SongAdapter.class.getSimpleName();
     private int mNumberItems;
-    private String[] songs;
+    private ArrayList<String> songs;
 
     final private ListItemClickListener mOnClickListener;
 
@@ -35,7 +39,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
      * @param numberOfItems Number of items to display in list
      */
     public SongAdapter(int numberOfItems, String[] assetFiles, ListItemClickListener listener) {
-        songs = assetFiles;
+        songs = new ArrayList<String>(Arrays.asList(assetFiles));
         mOnClickListener = listener;
         mNumberItems = numberOfItems;
     }
@@ -77,7 +81,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     @Override
     public void onBindViewHolder(SongViewHolder holder, int position) {
         Log.d(TAG, "#" + position);
-        holder.bind(songs[position]);
+        holder.bind(songs.get(position));
     }
 
     /**
@@ -89,7 +93,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     @Override
     public int getItemCount() {
 
-        return mNumberItems;
+        return songs.size();
     }
 
     /**
@@ -129,5 +133,11 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
         }
+    }
+
+    public void setFilter(ArrayList<String> newSongs) {
+        songs = newSongs;
+        notifyDataSetChanged();
+
     }
 }

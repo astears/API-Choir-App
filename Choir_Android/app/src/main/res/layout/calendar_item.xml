@@ -41,7 +41,7 @@
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="15dp"
-                app:cardBackgroundColor="@color/authui_colorPrimary">
+                app:cardBackgroundColor="@color/colorAccentLight">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                 android:layout_marginLeft="65dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="15dp"
-                app:cardBackgroundColor="@android:color/darker_gray">
+                app:cardBackgroundColor="@color/colorPrimaryDark">
 
                 <LinearLayout
                     android:layout_width="match_parent"

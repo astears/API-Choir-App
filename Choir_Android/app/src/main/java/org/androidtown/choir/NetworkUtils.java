@@ -16,8 +16,8 @@ import java.net.MalformedURLException;
 
 public class NetworkUtils {
 
-    final static String LOGIN_BASE_URL = "http://192.168.64.2/choir_app/login.php";
-    final static String SIGNUP_BASE_URL = "http://192.168.64.2/choir_app/signup.php";
+    final static String LOGIN_BASE_URL = "https://choir-db.herokuapp.com/login.php";
+    final static String SIGNUP_BASE_URL = "https://choir-db.herokuapp.com/signup.php";
     final static String USERNAME_PARAM = "username";
     final static String PASS_PARAM = "password";
     final static String FNAME_PARAM = "fName";

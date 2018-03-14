@@ -2,6 +2,7 @@ package org.androidtown.choir;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.content.Intent;
 import android.os.AsyncTask;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONObject;
 
@@ -24,18 +31,28 @@ public class MainActivity extends AppCompatActivity {
     EditText passwordEditText;
 
     SessionManager session;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        session = new SessionManager(getApplicationContext());
-        session.checkLogin();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            //already signed in
+            Intent i = new Intent(this, MemberActivity.class);
+            startActivity(i);
+        }
+
+//        session = new SessionManager(getApplicationContext());
+//        session.checkLogin();
 
     }
 
-    public void loginButtonPressed(View view) {
+    public void onLoginClick(View view) {
 
         usernameEditText = (EditText)findViewById(R.id.usernameEditText);
         passwordEditText = (EditText)findViewById(R.id.passwordEditText);
@@ -48,12 +65,38 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Both username & password are required", Toast.LENGTH_SHORT).show();
         }
         else {
-            new LoginTask().execute(username, password);
+            //new LoginTask().execute(username, password);
+            mAuth.signInWithEmailAndPassword(username, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("TAG", "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                Intent i = new Intent(MainActivity.this, MemberActivity.class);
+                                startActivity(i);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("TAG", "signInWithEmail:failure", task.getException());
+                                Toast.makeText(MainActivity.this, "Please provide a valid email and password",
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            // ...
+                        }
+                    });
         }
 
     }
 
-    public void signupButtonPressed(View view) {
+    public void onForgotPasswordClick(View view) {
+        Intent intent = new Intent(MainActivity.this, ResetPassword.class);
+        startActivity(intent);
+    }
+
+    public void onRegisterClick(View view) {
         Intent intent = new Intent(MainActivity.this, SignupActivity.class);
         startActivity(intent);
     }

@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:background="#fff"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,120 +9,307 @@
     android:layout_height="match_parent"
     tools:context="org.androidtown.choir.SignupActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <TextView
-        android:id="@+id/signupHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/signup_button"
-        android:textSize="25sp"
-        android:layout_gravity="center"/>
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/firstName"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:inputType="textPersonName"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_firstname"
-        android:textSize="18sp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"/>
+        <RelativeLayout
+            android:id="@+id/rl_one_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-   <EditText
-        android:id="@+id/lastName"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_lastname"
-        android:textSize="18sp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"/>
+            <View
+                android:id="@+id/v_one_register"
+                android:background="@drawable/login_crescendo_pic_two"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
 
-   <EditText
-        android:id="@+id/signupUsername"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_username"
-        android:textSize="18sp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"/>
+            <RelativeLayout
+                android:layout_marginTop="50dp"
+                android:id="@+id/rl_two_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <EditText
-       android:id="@+id/signupPassword"
-       android:layout_width="350dp"
-       android:layout_height="wrap_content"
-       android:inputType="textPassword"
-       android:layout_marginLeft="12dp"
-       android:layout_marginStart="12dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_password"
-        android:textSize="18sp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"/>
+                <TextView
+                    android:fontFamily="@font/centurygothicbold"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_one_register"
+                    android:textSize="32sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhite"
+                    android:text="C R E S C E N D O"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-   <EditText
-       android:id="@+id/confirmPassword"
-       android:layout_width="350dp"
-       android:layout_height="wrap_content"
-       android:inputType="textPassword"
-       android:layout_marginLeft="12dp"
-       android:layout_marginStart="12dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_confirm_password"
-        android:textSize="18sp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"/>
+                <TextView
+                    android:fontFamily="@font/centurygothicregular"
+                    android:id="@+id/tv_two_register"
+                    android:layout_below="@+id/tv_one_register"
+                    android:textSize="15sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhite"
+                    android:text="FOR THE USA MONUMENTAL CHOIR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-    <EditText
-         android:id="@+id/email"
-         android:layout_width="350dp"
-         android:layout_height="wrap_content"
-         android:inputType="textEmailAddress"
-         android:layout_marginLeft="12dp"
-         android:layout_marginStart="12dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_email"
-        android:textSize="18sp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"/>
+            </RelativeLayout>
 
-     <Button
-         android:id="@+id/signupSubmit"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:onClick="onSignupSubmit"
-         android:text="@string/signup_submit"
-         android:layout_gravity="center"/>
-    </LinearLayout>
+        </RelativeLayout>
+
+        <android.support.v7.widget.CardView
+            app:cardUseCompatPadding="false"
+            app:cardPreventCornerOverlap="false"
+            android:id="@+id/cv_one_register"
+            app:cardBackgroundColor="#fcfcfc"
+            android:layout_marginTop="160dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="360dp"
+            android:layout_height="480dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:fontFamily="@font/centurygothicregular"
+                    android:id="@+id/tv_three_register"
+                    android:padding="15dp"
+                    android:text="REGISTER"
+                    android:textColor="@color/colorAccent"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/rl_info1_register"
+                    android:layout_below="@+id/tv_three_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_marginTop="10dp"
+                        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:id="@+id/til_one_register"
+                        android:layout_width="155dp"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:fontFamily="@font/centurygothicregular"
+                            android:id="@+id/firstName"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
+                            android:hint="First Name"
+                            android:inputType="textPersonName"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_marginTop="10dp"
+                        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:id="@+id/til_two_register"
+                        android:layout_toRightOf="@+id/til_one_register"
+                        android:layout_width="155dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:fontFamily="@font/centurygothicregular"
+                            android:id="@+id/lastName"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
+                            android:hint="Last Name"
+                            android:inputType="textPersonName"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_below="@+id/rl_info1_register"
+                    android:id="@+id/rl_info2_register"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_marginTop="10dp"
+                        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:id="@+id/til_three_register"
+                        android:layout_width="155dp"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:fontFamily="@font/centurygothicregular"
+                            android:id="@+id/email"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
+                            android:hint="Email"
+                            android:inputType="textEmailAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:layout_toRightOf="@+id/til_three_register"
+                        android:id="@+id/til_four_register"
+                        android:layout_width="155dp"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:fontFamily="@font/centurygothicregular"
+                            android:id="@+id/signupUsername"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
+                            android:hint="New Username"
+                            android:inputType="textPersonName"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_below="@+id/rl_info2_register"
+                    android:id="@+id/rl_info3_register"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_marginTop="10dp"
+                        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:id="@+id/til_five_register"
+                        android:layout_width="155dp"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:fontFamily="@font/centurygothicregular"
+                            android:id="@+id/signupPassword"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
+                            android:hint="Password"
+                            android:inputType="textPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:layout_toRightOf="@+id/til_five_register"
+                        android:id="@+id/til_six_register"
+                        android:layout_width="155dp"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:fontFamily="@font/centurygothicregular"
+                            android:id="@+id/confirmPassword"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
+                            android:hint="Confirm Pass"
+                            android:inputType="textPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </RelativeLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:layout_below="@+id/rl_info3_register"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/til_seven_register"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:fontFamily="@font/centurygothicregular"
+                        android:id="@+id/accessCode"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
+                        android:hint="Access Code"
+                        android:inputType="text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:fontFamily="@font/centurygothicbold"
+                    android:onClick="onSignupSubmit"
+                    android:textSize="22sp"
+                    android:text="REGISTER"
+                    android:textColor="@color/colorWhite"
+                    android:id="@+id/btn_one_register"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/til_seven_register"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/ripple_light_blue"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp" />
+
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/rl_three_register"
+                    android:layout_width="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/btn_one_register"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:fontFamily="@font/centurygothicregular"
+                        android:id="@+id/tv_four_register"
+                        android:text="By creating an account you agree with the "
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:fontFamily="@font/centurygothicregular"
+                        android:id="@+id/tv_five_register"
+                        android:onClick="onTermsConditionsClick"
+                        android:clickable="true"
+                        android:layout_marginLeft="3dp"
+                        android:text="Terms and Conditions"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@+id/tv_four_register"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
 
 </ScrollView>
